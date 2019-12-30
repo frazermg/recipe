@@ -2,6 +2,7 @@ import React from "react";
 import { createStackNavigator } from "react-navigation-stack";
 import { createAppContainer } from "react-navigation";
 import { createBottomTabNavigator } from "react-navigation-tabs";
+import { createDrawerNavigator } from "react-navigation-drawer";
 import { Ionicons } from "@expo/vector-icons";
 import { Platform } from "react-native";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
@@ -10,6 +11,7 @@ import CategoriesScreen from "../screens/CategoriesScreen";
 import CategoryMealsScreen from "../screens/CategoriesMealsScreen";
 import MealDetailScreen from "../screens/MealDetailsScreen";
 import FavoritesScreen from "../screens/FavoritesScreen";
+import FiltersScreen from "../screens/FiltersScreen";
 import Colors from "../constants/Colors";
 
 const defaultStackNavOptions = {
@@ -86,7 +88,17 @@ const MealsFavTabNavigator =
         }
       });
 
+// using a stack so we get a header for this stack.
+const FiltersNavigator = createStackNavigator({
+  Filters: FiltersScreen
+});
+
+const MainNavigator = createDrawerNavigator({
+  MealsFavs: MealsFavTabNavigator,
+  Filters: FiltersNavigator
+});
+
 // to combine multiple navigators you can mix and match them. The root navigator can have nested navigations. In this case the MealsFavTabNavigator is the root.
-export default createAppContainer(MealsFavTabNavigator);
+export default createAppContainer(MainNavigator);
 
 // createAppContainer creates a navigation container, a react component.
