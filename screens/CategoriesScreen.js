@@ -26,13 +26,21 @@ const CategoriesScreen = ({ navigation }) => {
   );
 };
 
-CategoriesScreen.navigationOptions = {
-  headerTitle: "Meal Categories",
-  headerLeft: (
-    <HeaderButtons HeaderButtonComponent={HeaderButton}>
-      <Item title="Menu" iconName="ios-menu" onPress={() => {}} />
-    </HeaderButtons>
-  )
+CategoriesScreen.navigationOptions = navData => {
+  return {
+    headerTitle: "Meal Categories",
+    headerLeft: (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Menu"
+          iconName="ios-menu"
+          onPress={() => {
+            navData.navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    )
+  };
 };
 
 export default CategoriesScreen;

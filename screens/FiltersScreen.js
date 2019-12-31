@@ -1,23 +1,90 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, { useState } from "react";
+import { View, Text, StyleSheet, Switch, Platform } from "react-native";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
-const FiltersScreen = props => {
+import HeaderButton from "../components/HeaderButton";
+import Colors from "../constants/Colors";
+
+const FilterSwitch = props => {
   return (
-    <View styles={styles.screen}>
-      <Text>The Filters Screen!</Text>
+    <View style={styles.filterContainer}>
+      <Text>{props.label}</Text>
+      <Switch
+        value={props.value}
+        onValueChange={props.onChange}
+        trackColor={{ true: Colors.primaryColor }}
+        thumbColor={Platform.OS === "android" ? Colors.primaryColor : "white"}
+      />
     </View>
   );
 };
 
-FiltersScreen.navigationOptions = {
-  headerTitle: "Filter Meals"
+const FiltersScreen = props => {
+  const [isGlutenFree, setIsGlutenFree] = useState(false);
+  const [isLactoseFree, setIsLactoseFree] = useState(false);
+  const [isVegan, setIsVegan] = useState(false);
+  const [isVegeterian, setIsVegeterian] = useState(false);
+  return (
+    <View style={styles.screen}>
+      <Text style={styles.title}>Available Filters / Restrictions</Text>
+      <FilterSwitch
+        label="Gluten-free"
+        value={isGlutenFree}
+        onChange={newValue => setIsGlutenFree(newValue)}
+      />
+      <FilterSwitch
+        label="Dairy-free"
+        value={isLactoseFree}
+        onChange={newValue => setIsLactoseFree(newValue)}
+      />
+      <FilterSwitch
+        label="Vegan"
+        value={isVegan}
+        onChange={newValue => setIsVegan(newValue)}
+      />
+      <FilterSwitch
+        label="Vegetarian"
+        value={isVegeterian}
+        onChange={newValue => setIsVegeterian(newValue)}
+      />
+    </View>
+  );
+};
+
+FiltersScreen.navigationOptions = navData => {
+  return {
+    headerTitle: "Filter Meals",
+    headerLeft: (
+      <HeaderButtons HeaderButtonComponent={HeaderButton}>
+        <Item
+          title="Menu"
+          iconName="ios-menu"
+          onPress={() => {
+            navData.navigation.toggleDrawer();
+          }}
+        />
+      </HeaderButtons>
+    )
+  };
 };
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: "center",
     alignItems: "center"
+  },
+  title: {
+    fontFamily: "open-sans-bold",
+    fontSize: 22,
+    margin: 20,
+    textAlign: "center"
+  },
+  filterContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    width: "80%",
+    marginVertical: 10
   }
 });
 
