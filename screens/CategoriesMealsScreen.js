@@ -1,11 +1,15 @@
 import React from "react";
-import { CATEGORIES, MEALS } from "../data/dummy-data";
+import { useSelector } from "react-redux"; // this is like using connect, matchStateToProps etc
+
+import { CATEGORIES } from "../data/dummy-data";
 import MealList from "../components/MealList";
 
 const CategoryMealScreen = ({ navigation }) => {
   const catId = navigation.getParam("categoryId");
 
-  const displayedMeals = MEALS.filter(
+  const availableMeals = useSelector(state => state.meals.filteredMeals);
+
+  const displayedMeals = availableMeals.filter(
     meal => meal.categoryIds.indexOf(catId) >= 0
   );
 

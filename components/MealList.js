@@ -14,7 +14,8 @@ const MealList = ({ listData, navigation }) => {
         image={itemData.item.imageUrl}
         onSelect={() => {
           navigation.navigate("MealDetail", {
-            mealId: itemData.item.id
+            mealId: itemData.item.id,
+            mealTitle: itemData.item.title
           });
         }}
       />
